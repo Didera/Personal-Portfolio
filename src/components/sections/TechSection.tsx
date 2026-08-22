@@ -334,7 +334,7 @@ export function TechSection() {
                       {/* Standalone Icon */}
                       <div className="h-16 w-16 mb-3 flex items-center justify-center transition-transform duration-300 group-hover:scale-110">
                         <img
-                          src={item.image}
+                          src={item.image && item.image.startsWith("http") ? item.image : `${process.env.__NEXT_ROUTER_BASEPATH || ""}${item.image}`}
                           alt={item.name}
                           className="h-12 w-12 object-contain transition-all duration-300"
                           style={{

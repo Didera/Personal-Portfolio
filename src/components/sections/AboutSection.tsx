@@ -24,7 +24,7 @@ export function AboutSection() {
       {/* Full-width background video */}
       <video
         className="absolute inset-0 -z-30 h-full w-full object-cover"
-        src="/videos/about-bg.mp4"
+        src={`${process.env.__NEXT_ROUTER_BASEPATH || ""}/videos/about-bg.mp4`}
         autoPlay
         muted
         loop
