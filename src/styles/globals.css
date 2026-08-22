@@ -1,0 +1,211 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ─── Atelier Zero — Dark Editorial Tokens ─── */
+:root {
+  --bg: #0F0E0C;
+  --bg2: #161513;
+  --surface: #1C1A17;
+  --card: #141311;
+  --accent: #C4553D;
+  --accent2: #5E6B52;
+  --accent3: #2C3E50;
+  --text: #E8E4DD;
+  --muted: #7D7872;
+  --border: rgba(232, 228, 221, 0.1);
+  --border-light: rgba(232, 228, 221, 0.06);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  font-size: 16px;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-instrument-serif), serif;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ─── Scrollbar ─── */
+::-webkit-scrollbar {
+  width: 3px;
+}
+::-webkit-scrollbar-track {
+  background: var(--bg);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--border);
+  border-radius: 1px;
+}
+
+/* ─── Certifications modal scrollbar ─── */
+.cert-scroll::-webkit-scrollbar {
+  width: 6px;
+}
+.cert-scroll::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.04);
+  border-radius: 4px;
+}
+.cert-scroll::-webkit-scrollbar-thumb {
+  background: #F97316;
+  border-radius: 4px;
+}
+.cert-scroll::-webkit-scrollbar-thumb:hover {
+  background: #FB923C;
+}
+
+/* ─── Experience Section panel scrollbar ─── */
+.experience-scroll::-webkit-scrollbar {
+  width: 5px;
+}
+.experience-scroll::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.02);
+  border-radius: 3px;
+}
+.experience-scroll::-webkit-scrollbar-thumb {
+  background: var(--panel-accent, var(--accent));
+  border-radius: 3px;
+}
+.experience-scroll::-webkit-scrollbar-thumb:hover {
+  filter: brightness(1.1);
+}
+
+/* ─── Film Grain Overlay ─── */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 9997;
+  pointer-events: none;
+  opacity: 0.03;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+}
+
+/* ─── Editorial Utilities ─── */
+
+/* Hairline rule */
+.hairline {
+  border: none;
+  height: 1px;
+  background: var(--border);
+}
+
+/* Small caps label */
+.small-caps {
+  font-family: var(--font-dm-mono), monospace;
+  font-size: 0.75rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+/* Editorial section number */
+.editorial-number {
+  font-family: var(--font-dm-mono), monospace;
+  font-size: 0.7rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+/* Mono detail text */
+.mono-detail {
+  font-family: var(--font-dm-mono), monospace;
+  font-size: 0.85rem;
+  letter-spacing: 0.04em;
+  color: var(--muted);
+}
+
+/* Editorial link — underline on hover */
+.editorial-link {
+  color: var(--text);
+  text-decoration: none;
+  position: relative;
+  transition: color 0.3s ease;
+}
+.editorial-link::after {
+  content: "";
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 0;
+  height: 1px;
+  background: var(--accent);
+  transition: width 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.editorial-link:hover::after {
+  width: 100%;
+}
+.editorial-link:hover {
+  color: var(--accent);
+}
+
+/* ─── Typewriter Cursor ─── */
+.typewriter-cursor {
+  animation: blink 0.75s step-end infinite;
+}
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+/* ─── Navbar Link Hover ─── */
+.nav-link {
+  color: var(--muted);
+  padding: 6px 12px;
+  border-radius: 4px;
+  transition: color 0.3s ease, background 0.3s ease, box-shadow 0.3s ease;
+}
+.nav-link::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0;
+  height: 1px;
+  background: var(--accent);
+  transition: width 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.nav-link:hover {
+  color: var(--text);
+  background: rgba(196, 85, 61, 0.08);
+  box-shadow: 0 0 16px rgba(196, 85, 61, 0.06);
+}
+.nav-link:hover::after {
+  width: 60%;
+}
+
+/* Focus styles */
+a:focus-visible,
+button:focus-visible {
+  outline: 1px solid var(--accent);
+  outline-offset: 4px;
+  border-radius: 0;
+}
+
+/* Selection */
+::selection {
+  background: rgba(196, 85, 61, 0.25);
+  color: var(--text);
+}
+
+/* Hide scrollbar but keep scroll functionality */
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}

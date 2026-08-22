@@ -1,0 +1,58 @@
+export const certifications = [
+  {
+    title: "Project Management & Business Analysis Bootcamp 2.0",
+    issuer: "STEM Link",
+    date: "2025",
+    credentialId: "ac5c682e-a77d-441d-8e3d-4adb5c3888a0",
+    credentialUrl: "",
+    distinction: "High Achiever",
+    tags: ["Business Analysis", "Project Management", "Agile"],
+  },
+  {
+    title: "Agile Project Management Foundation",
+    issuer: "University of Moratuwa",
+    date: "2025",
+    credentialId: "",
+    credentialUrl: "",
+    distinction: "",
+    tags: ["Agile", "Project Management"],
+  },
+  {
+    title: "Foundations of Project Management",
+    issuer: "University of Moratuwa",
+    date: "2025",
+    credentialId: "",
+    credentialUrl: "",
+    distinction: "",
+    tags: ["Project Management"],
+  },
+  {
+    title: "Complete Data Science Bootcamp 2025",
+    issuer: "365 Careers (Udemy)",
+    date: "2025",
+    credentialId: "UC-4bacbe45-b93b-471b-a497-670121df853b",
+    credentialUrl: "https://ude.my/UC-4bacbe45-b93b-471b-a497-670121df853b",
+    distinction: "",
+    tags: ["Data Science", "Python", "Machine Learning"],
+  },
+  {
+    title: "Linux Essentials Certification",
+    issuer: "Cisco Networking Academy",
+    date: "2025",
+    credentialId: "",
+    credentialUrl: "",
+    distinction: "",
+    tags: ["Linux", "Networking"],
+  },
+  {
+    title: "The Complete Web Development Bootcamp",
+    issuer: "Udemy",
+    date: "2025",
+    credentialId: "UC-4bacbe45-b93b-471b-a497-670121df853b",
+    credentialUrl: "https://ude.my/UC-4bacbe45-b93b-471b-a497-670121df853b",
+    distinction: "",
+    tags: ["Web Development", "JavaScript"],
+  },
+] as const;
+
+export type Certification = (typeof certifications)[number];
