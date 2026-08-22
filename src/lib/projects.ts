@@ -42,7 +42,8 @@ export const projects: Project[] = [
       "Recharts",
       "PapaParse",
     ],
-    githubUrl: "https://github.com/Didera/ADD-YOUR-REPOSITORY-LINK",
+    githubUrl:
+      "https://github.com/Didera/Demo---Customer-Retention-Analysis-Project",
     demoUrl: "https://add-your-demo-link.com",
     year: "2026",
     role: "Data Analyst, Machine Learning Developer & Frontend Developer",
