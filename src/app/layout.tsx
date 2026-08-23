@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Syne, DM_Mono, Instrument_Serif } from "next/font/google";
 import "@/styles/globals.css";
 import { SmoothScroll } from "@/components/ui/SmoothScroll";
+import { GlobalParticleField } from "@/components/ui/ParticleField";
 
 const syne = Syne({
   subsets: ["latin"],
@@ -65,8 +66,9 @@ export default function RootLayout({
       className={`${syne.variable} ${dmMono.variable} ${instrumentSerif.variable}`}
     >
       <body>
-        <SmoothScroll>{children}</SmoothScroll>
-      </body>
+          <GlobalParticleField />
+          <SmoothScroll>{children}</SmoothScroll>
+        </body>
     </html>
   );
 }
