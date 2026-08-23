@@ -1,8 +1,7 @@
 "use client";
 
 import { useState, useEffect, useRef, useCallback } from "react";
-import { motion, useScroll, useTransform } from "framer-motion";
-import { useInView } from "react-intersection-observer";
+import { motion, useScroll, useTransform, useMotionValueEvent } from "framer-motion";
 import Link from "next/link";
 import { ParticleField } from "@/components/ui/ParticleField";
 
@@ -15,8 +14,8 @@ const LINES = [
   "and data-driven narratives, bridging the gap between technical depth and business impact",
 ];
 
-const CHAR_SPEED = 28;  // ms per character
-const LINE_PAUSE = 250; // pause between lines
+const CHAR_SPEED = 28;
+const LINE_PAUSE = 250;
 
 function TypewriterBlock({ started }: { started: boolean }) {
   const [currentLine, setCurrentLine] = useState(0);
@@ -32,7 +31,6 @@ function TypewriterBlock({ started }: { started: boolean }) {
     });
   }, [currentLine]);
 
-  // Character ticker — only runs once `started` is true
   useEffect(() => {
     if (!started) return;
     if (currentLine >= LINES.length) return;
@@ -65,20 +63,11 @@ function TypewriterBlock({ started }: { started: boolean }) {
     >
       {LINES.map((line, i) => {
         if (i > currentLine) return null;
-
-        const visibleText =
-          i < currentLine ? line : line.slice(0, currentChar);
+        const visibleText = i < currentLine ? line : line.slice(0, currentChar);
         const isActive = i === currentLine && currentLine < LINES.length;
 
         return (
-          <div
-            key={i}
-            style={{
-              color: "var(--muted)",
-              marginBottom: "0.35em",
-              minHeight: "1.85em",
-            }}
-          >
+          <div key={i} style={{ color: "var(--muted)", marginBottom: "0.35em", minHeight: "1.85em" }}>
             {visibleText}
             {isActive && (
               <span
@@ -101,40 +90,50 @@ function TypewriterBlock({ started }: { started: boolean }) {
 }
 
 export function HeroSection() {
-  // Observe when the sticky content block is in view to trigger animations
-  const [contentRef, contentInView] = useInView({
-    threshold: 0.3,
-    triggerOnce: true,
-  });
-
-  // Scroll-based fade-out: content fades as user scrolls past the midpoint
   const sectionRef = useRef<HTMLElement>(null);
+  const [typewriterStarted, setTypewriterStarted] = useState(false);
+
+  // Track scroll progress across the full hero section (280vh)
   const { scrollYProgress } = useScroll({
     target: sectionRef,
     offset: ["start start", "end end"],
   });
-  // Fade content out in the second half of the scroll
-  const contentOpacity = useTransform(scrollYProgress, [0.5, 0.85], [1, 0]);
-  const contentY = useTransform(scrollYProgress, [0.5, 0.85], ["0%", "-6%"]);
+
+  // Typewriter + CTA appear when user has scrolled ~30% through hero
+  // Start the typewriter typing once scroll threshold passed
+  useMotionValueEvent(scrollYProgress, "change", (v) => {
+    if (v >= 0.28 && !typewriterStarted) {
+      setTypewriterStarted(true);
+    }
+  });
+
+  // Typewriter row fades in between scroll 28% → 50%
+  const bioOpacity = useTransform(scrollYProgress, [0.28, 0.52], [0, 1]);
+  const bioY      = useTransform(scrollYProgress, [0.28, 0.52], [40, 0]);
+
+  // Scroll indicator fades out once user starts scrolling
+  const scrollHintOpacity = useTransform(scrollYProgress, [0, 0.12], [1, 0]);
 
   return (
-    /* Outer scroll container — 200vh gives room to scroll through */
+    /* ── 280vh outer section gives scroll room ── */
     <section
       ref={sectionRef}
       id="hero"
       className="relative"
-      style={{ minHeight: "200vh" }}
+      style={{ minHeight: "280vh" }}
     >
-      {/* ── Sticky viewport-height panel ── */}
-      <div className="sticky top-0 flex min-h-screen flex-col overflow-hidden">
-        {/* Particle background fills the sticky panel */}
+      {/* ── Sticky panel: stays in viewport as user scrolls ── */}
+      <div
+        className="sticky top-0 flex flex-col overflow-hidden"
+        style={{ height: "100vh" }}
+      >
         <ParticleField />
 
         {/* Editorial marginalia — top right */}
         <motion.div
           initial={{ opacity: 0 }}
-          animate={contentInView ? { opacity: 1 } : {}}
-          transition={{ duration: 0.9, delay: 0.3 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 1, delay: 1.2 }}
           className="absolute top-8 right-10 lg:right-16 font-mono text-right z-10"
           style={{
             fontSize: "0.7rem",
@@ -149,16 +148,13 @@ export function HeroSection() {
           2026
         </motion.div>
 
-        {/* ── Centered content ── */}
-        <motion.div
-          ref={contentRef}
-          style={{ opacity: contentOpacity, y: contentY }}
-          className="relative z-10 flex flex-1 flex-col justify-center px-6 sm:px-10 lg:px-16"
-        >
-          {/* Thin horizontal rule */}
+        {/* ── Main content: vertically centered ── */}
+        <div className="relative z-10 flex flex-1 flex-col justify-center px-6 sm:px-10 lg:px-16">
+
+          {/* Accent rule */}
           <motion.div
             initial={{ scaleX: 0, opacity: 0 }}
-            animate={contentInView ? { scaleX: 1, opacity: 1 } : {}}
+            animate={{ scaleX: 1, opacity: 1 }}
             transition={{ duration: 0.8, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
             style={{
               width: "60px",
@@ -169,7 +165,7 @@ export function HeroSection() {
             }}
           />
 
-          {/* Name — cinematic split reveal */}
+          {/* ── Phase 1: Name (loads on mount, centered) ── */}
           <h1
             className="font-serif leading-[0.92]"
             style={{
@@ -181,12 +177,8 @@ export function HeroSection() {
             <span style={{ display: "block", overflow: "hidden" }}>
               <motion.span
                 initial={{ y: "100%" }}
-                animate={contentInView ? { y: "0%" } : {}}
-                transition={{
-                  duration: 1,
-                  delay: 0.35,
-                  ease: [0.16, 1, 0.3, 1],
-                }}
+                animate={{ y: "0%" }}
+                transition={{ duration: 1, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
                 style={{
                   display: "block",
                   fontSize: "clamp(2.2rem, 2.5vw, 2rem)",
@@ -201,12 +193,8 @@ export function HeroSection() {
             <span style={{ display: "block", overflow: "hidden" }}>
               <motion.span
                 initial={{ y: "110%" }}
-                animate={contentInView ? { y: "0%" } : {}}
-                transition={{
-                  duration: 1,
-                  delay: 0.45,
-                  ease: [0.16, 1, 0.3, 1],
-                }}
+                animate={{ y: "0%" }}
+                transition={{ duration: 1, delay: 0.4, ease: [0.16, 1, 0.3, 1] }}
                 style={{ display: "block" }}
               >
                 Devinda
@@ -217,12 +205,8 @@ export function HeroSection() {
               <motion.em
                 className="font-serif"
                 initial={{ y: "110%" }}
-                animate={contentInView ? { y: "0%" } : {}}
-                transition={{
-                  duration: 1,
-                  delay: 0.6,
-                  ease: [0.16, 1, 0.3, 1],
-                }}
+                animate={{ y: "0%" }}
+                transition={{ duration: 1, delay: 0.55, ease: [0.16, 1, 0.3, 1] }}
                 style={{
                   display: "block",
                   fontStyle: "italic",
@@ -237,14 +221,12 @@ export function HeroSection() {
             </span>
           </h1>
 
-          {/* Typewriter + CTAs — appear after name */}
+          {/* ── Phase 2: Typewriter + CTAs (revealed on scroll) ── */}
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={contentInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.9, delay: 0.85, ease: [0.16, 1, 0.3, 1] }}
+            style={{ opacity: bioOpacity, y: bioY }}
             className="flex flex-col lg:flex-row lg:items-end lg:justify-between mt-12 gap-8"
           >
-            <TypewriterBlock started={contentInView} />
+            <TypewriterBlock started={typewriterStarted} />
 
             <div className="flex gap-8 items-center">
               <Link
@@ -291,13 +273,11 @@ export function HeroSection() {
               </Link>
             </div>
           </motion.div>
-        </motion.div>
+        </div>
 
-        {/* Scroll indicator — stays at bottom of sticky panel */}
+        {/* Scroll hint — fades out as soon as user starts scrolling */}
         <motion.div
-          initial={{ opacity: 0 }}
-          animate={contentInView ? { opacity: 1 } : {}}
-          transition={{ duration: 0.9, delay: 1.2 }}
+          style={{ opacity: scrollHintOpacity }}
           className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-3 z-10"
         >
           <div
