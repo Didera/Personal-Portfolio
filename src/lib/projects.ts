@@ -47,6 +47,11 @@ export const projects: Project[] = [
     demoUrl: "https://add-your-demo-link.com",
     year: "2026",
     role: "Data Analyst, Machine Learning Developer & Frontend Developer",
+    snapshots: [
+      "/snapshots/churn-dashboard-overview.png",
+      "/snapshots/churn-model-comparison.png",
+      "/snapshots/churn-eda-portal.png",
+    ],
   },
 
   {
@@ -91,6 +96,11 @@ export const projects: Project[] = [
     demoUrl: "https://tracera.example.com",
     year: "2025",
     role: "Full-Stack Developer & Data Pipeline Architect",
+    snapshots: [
+      "/snapshots/tracera-dashboard.png",
+      "/snapshots/tracera-requirements.png",
+      "/snapshots/tracera-cicd-status.png",
+    ],
   },
   {
     slug: "neurolabs",
@@ -126,6 +136,11 @@ export const projects: Project[] = [
     demoUrl: "https://neurolabs.example.com",
     year: "2024",
     role: "Group Project — Data Science & ML",
+    snapshots: [
+      "/snapshots/neurolabs-model-builder.png",
+      "/snapshots/neurolabs-visualizations.png",
+      "/snapshots/neurolabs-results.png",
+    ],
   },
 
   {
@@ -183,6 +198,11 @@ export const projects: Project[] = [
     demoUrl: "https://add-your-demo-link.com",
     year: "2025",
     role: "Business Analyst & Project Manager",
+    snapshots: [
+      "/snapshots/medicare-bpmn-asis.png",
+      "/snapshots/medicare-wireframes.png",
+      "/snapshots/medicare-wbs.png",
+    ],
   },
 ];
 export function getProjectBySlug(slug: string): Project | undefined {

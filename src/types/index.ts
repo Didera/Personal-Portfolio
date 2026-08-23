@@ -14,6 +14,7 @@ export interface Project {
   year: string;
   role: string;
   category: "data-science" | "business-analysis";
+  snapshots?: string[];
 }
 
 export interface Experience {

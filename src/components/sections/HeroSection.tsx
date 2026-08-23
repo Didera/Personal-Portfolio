@@ -70,22 +70,31 @@ function TypewriterBlock() {
       ref={ref}
       className="font-mono"
       style={{
-        fontSize: "0.9rem",
+        fontSize: "clamp(0.75rem, 2.5vw, 0.9rem)",
         maxWidth: "520px",
-        lineHeight: 2,
+        lineHeight: 1.85,
         letterSpacing: "0.02em",
-        minHeight: `${LINES.length * 2}em`,
+        /* No fixed minHeight — let lines wrap naturally on mobile */
+        wordBreak: "break-word",
+        overflowWrap: "break-word",
       }}
     >
       {LINES.map((line, i) => {
-        if (i > currentLine) return <div key={i} style={{ height: "2em" }} />;
+        if (i > currentLine) return null;
 
         const visibleText =
           i < currentLine ? line : line.slice(0, currentChar);
         const isActive = i === currentLine && currentLine < LINES.length;
 
         return (
-          <div key={i} style={{ height: "2em", color: "var(--muted)" }}>
+          <div
+            key={i}
+            style={{
+              color: "var(--muted)",
+              marginBottom: "0.35em",
+              minHeight: "1.85em",
+            }}
+          >
             {visibleText}
             {isActive && (
               <span
@@ -111,7 +120,7 @@ export function HeroSection() {
   return (
     <section
       id="hero"
-      className="relative min-h-screen flex flex-col justify-end px-10 lg:px-16 pb-20 overflow-hidden"
+      className="relative min-h-screen flex flex-col justify-end px-6 sm:px-10 lg:px-16 pb-20 overflow-hidden"
       style={{ paddingTop: "10rem" }}
     >
       {/* Animated particle background */}

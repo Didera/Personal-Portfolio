@@ -61,9 +61,12 @@ function SectionDivider({ number, title }: { number: string; title: string }) {
 
 export function DSProjectDetail({ project }: Props) {
   const [activeSlide, setActiveSlide] = useState(0);
+  const [brokenSlides, setBrokenSlides] = useState<Set<number>>(new Set());
   const snapshots = project.snapshots ?? [];
   const slideCount = snapshots.length > 0 ? snapshots.length : 3;
   const currentSlide = activeSlide % slideCount;
+  const currentSrc = snapshots[currentSlide] ?? null;
+  const isPlaceholder = !currentSrc || brokenSlides.has(currentSlide);
 
   return (
     <motion.main
@@ -195,108 +198,170 @@ export function DSProjectDetail({ project }: Props) {
               </ul>
             </div>
 
-            {/* Snapshots */}
-            {snapshots.length > 0 && (
-              <div>
-                <SectionDivider number="03" title="Project Snapshots" />
-                <div className="relative aspect-[16/10] overflow-hidden border" style={{ borderColor: T.borderMid, background: T.surface }}>
+            {/* Snapshots — always visible, placeholder when images aren't added yet */}
+            <div>
+              <SectionDivider number="03" title="Project Snapshots" />
+              <div
+                className="relative overflow-hidden border"
+                style={{
+                  borderColor: T.borderMid,
+                  background: T.surface,
+                  aspectRatio: "16/10",
+                }}
+              >
+                {isPlaceholder ? (
+                  /* ── Placeholder tile ── */
+                  <div
+                    className="flex h-full w-full flex-col items-center justify-center gap-4"
+                    style={{
+                      background: `linear-gradient(135deg, ${T.bg2} 0%, ${T.surface} 100%)`,
+                      borderTop: `2px solid ${T.accentBorder}`,
+                    }}
+                  >
+                    {/* Grid overlay */}
+                    <div
+                      className="pointer-events-none absolute inset-0"
+                      style={{
+                        backgroundImage: `linear-gradient(${T.border} 1px, transparent 1px), linear-gradient(90deg, ${T.border} 1px, transparent 1px)`,
+                        backgroundSize: "32px 32px",
+                      }}
+                    />
+                    <span
+                      style={{
+                        fontFamily: "var(--font-ibm-mono)",
+                        fontSize: "2rem",
+                        color: T.accentBorder,
+                        lineHeight: 1,
+                      }}
+                    >
+                      [ {String(currentSlide + 1).padStart(2, "0")} ]
+                    </span>
+                    <span
+                      style={{
+                        fontFamily: "var(--font-ibm-mono)",
+                        fontSize: "0.65rem",
+                        letterSpacing: "0.22em",
+                        textTransform: "uppercase",
+                        color: T.muted,
+                      }}
+                    >
+                      Screenshot Placeholder
+                    </span>
+                    <span
+                      style={{
+                        fontFamily: "var(--font-ibm-mono)",
+                        fontSize: "0.55rem",
+                        letterSpacing: "0.14em",
+                        color: T.muted,
+                        opacity: 0.6,
+                        maxWidth: "220px",
+                        textAlign: "center",
+                        lineHeight: 1.6,
+                      }}
+                    >
+                      Replace with actual project screenshot
+                    </span>
+                  </div>
+                ) : (
                   <motion.img
-                    key={snapshots[currentSlide]}
-                    src={snapshots[currentSlide]}
+                    key={currentSrc}
+                    src={currentSrc!}
                     alt={`${project.name} snapshot ${currentSlide + 1}`}
                     initial={{ opacity: 0, scale: 1.03 }}
                     animate={{ opacity: 1, scale: 1 }}
                     transition={{ duration: 0.45, ease: "easeOut" }}
                     className="h-full w-full object-cover"
+                    onError={() => setBrokenSlides((prev) => new Set(prev).add(currentSlide))}
                   />
+                )}
+              </div>
+              <div className="mt-4 flex items-center justify-between">
+                <div className="flex gap-2">
+                  {Array.from({ length: slideCount }).map((_, i) => (
+                    <button key={i} type="button" onClick={() => setActiveSlide(i)}
+                      className="h-px transition-all duration-300"
+                      style={{ width: currentSlide === i ? "44px" : "18px", backgroundColor: currentSlide === i ? T.accent : `${T.border}` }}
+                    />
+                  ))}
                 </div>
-                <div className="mt-4 flex items-center justify-between">
-                  <div className="flex gap-2">
-                    {snapshots.map((_, i) => (
-                      <button key={i} type="button" onClick={() => setActiveSlide(i)}
-                        className="h-px transition-all duration-300"
-                        style={{ width: currentSlide === i ? "44px" : "18px", backgroundColor: currentSlide === i ? T.accent : `${T.border}` }}
-                      />
-                    ))}
-                  </div>
-                  <div className="flex gap-3">
-                    <button
-                      type="button"
-                      onClick={() => setActiveSlide((s) => (s - 1 + slideCount) % slideCount)}
-                      className="group relative overflow-hidden border font-mono transition-all duration-500"
-                      style={{
-                        borderColor: "rgba(221,230,245,0.15)",
-                        color: T.text,
-                        background: "transparent",
-                        padding: "0.45rem 1.1rem",
-                        fontSize: "0.65rem",
-                        letterSpacing: "0.15em",
-                        textTransform: "uppercase",
-                        cursor: "pointer",
-                      }}
-                      onMouseEnter={(e) => {
-                        e.currentTarget.style.background = "rgba(255, 255, 255, 0.05)";
-                        e.currentTarget.style.borderColor = T.accent;
-                        e.currentTarget.style.color = T.accent;
-                      }}
-                      onMouseLeave={(e) => {
-                        e.currentTarget.style.background = "transparent";
-                        e.currentTarget.style.borderColor = "rgba(221,230,245,0.15)";
-                        e.currentTarget.style.color = T.text;
-                      }}
-                    >
-                      {/* Animated corner accent */}
-                      <span
-                        className="pointer-events-none absolute left-0 top-0 h-1.5 w-1.5 border-l border-t transition-all duration-300 group-hover:h-2.5 group-hover:w-2.5"
-                        style={{ borderColor: T.text }}
-                      />
-                      <span
-                        className="pointer-events-none absolute bottom-0 right-0 h-1.5 w-1.5 border-b border-r transition-all duration-300 group-hover:h-2.5 group-hover:w-2.5"
-                        style={{ borderColor: T.text }}
-                      />
-                      Prev
-                    </button>
+                <div className="flex gap-3">
 
-                    <button
-                      type="button"
-                      onClick={() => setActiveSlide((s) => (s + 1) % slideCount)}
+                  <button
+                    type="button"
+                    onClick={() => setActiveSlide((s) => (s - 1 + slideCount) % slideCount)}
                       className="group relative overflow-hidden border font-mono transition-all duration-500"
                       style={{
-                        borderColor: "rgba(221,230,245,0.15)",
-                        color: T.text,
-                        background: "transparent",
-                        padding: "0.45rem 1.1rem",
-                        fontSize: "0.65rem",
-                        letterSpacing: "0.15em",
-                        textTransform: "uppercase",
-                        cursor: "pointer",
-                      }}
-                      onMouseEnter={(e) => {
-                        e.currentTarget.style.background = "rgba(255, 255, 255, 0.05)";
-                        e.currentTarget.style.borderColor = T.accent;
-                        e.currentTarget.style.color = T.accent;
-                      }}
-                      onMouseLeave={(e) => {
-                        e.currentTarget.style.background = "transparent";
-                        e.currentTarget.style.borderColor = "rgba(221,230,245,0.15)";
-                        e.currentTarget.style.color = T.text;
-                      }}
-                    >
-                      {/* Animated corner accent */}
-                      <span
-                        className="pointer-events-none absolute left-0 top-0 h-1.5 w-1.5 border-l border-t transition-all duration-300 group-hover:h-2.5 group-hover:w-2.5"
-                        style={{ borderColor: T.text }}
-                      />
-                      <span
-                        className="pointer-events-none absolute bottom-0 right-0 h-1.5 w-1.5 border-b border-r transition-all duration-300 group-hover:h-2.5 group-hover:w-2.5"
-                        style={{ borderColor: T.text }}
-                      />
-                      Next
-                    </button>
-                  </div>
+                      borderColor: "rgba(221,230,245,0.15)",
+                      color: T.text,
+                      background: "transparent",
+                      padding: "0.45rem 1.1rem",
+                      fontSize: "0.65rem",
+                      letterSpacing: "0.15em",
+                      textTransform: "uppercase",
+                      cursor: "pointer",
+                    }}
+                    onMouseEnter={(e) => {
+                      e.currentTarget.style.background = "rgba(255, 255, 255, 0.05)";
+                      e.currentTarget.style.borderColor = T.accent;
+                      e.currentTarget.style.color = T.accent;
+                    }}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.style.background = "transparent";
+                      e.currentTarget.style.borderColor = "rgba(221,230,245,0.15)";
+                      e.currentTarget.style.color = T.text;
+                    }}
+                  >
+                    {/* Animated corner accent */}
+                    <span
+                      className="pointer-events-none absolute left-0 top-0 h-1.5 w-1.5 border-l border-t transition-all duration-300 group-hover:h-2.5 group-hover:w-2.5"
+                      style={{ borderColor: T.text }}
+                    />
+                    <span
+                      className="pointer-events-none absolute bottom-0 right-0 h-1.5 w-1.5 border-b border-r transition-all duration-300 group-hover:h-2.5 group-hover:w-2.5"
+                      style={{ borderColor: T.text }}
+                    />
+                    Prev
+                  </button>
+
+                  <button
+                    type="button"
+                    onClick={() => setActiveSlide((s) => (s + 1) % slideCount)}
+                    className="group relative overflow-hidden border font-mono transition-all duration-500"
+                    style={{
+                      borderColor: "rgba(221,230,245,0.15)",
+                      color: T.text,
+                      background: "transparent",
+                      padding: "0.45rem 1.1rem",
+                      fontSize: "0.65rem",
+                      letterSpacing: "0.15em",
+                      textTransform: "uppercase",
+                      cursor: "pointer",
+                    }}
+                    onMouseEnter={(e) => {
+                      e.currentTarget.style.background = "rgba(255, 255, 255, 0.05)";
+                      e.currentTarget.style.borderColor = T.accent;
+                      e.currentTarget.style.color = T.accent;
+                    }}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.style.background = "transparent";
+                      e.currentTarget.style.borderColor = "rgba(221,230,245,0.15)";
+                      e.currentTarget.style.color = T.text;
+                    }}
+                  >
+                    {/* Animated corner accent */}
+                    <span
+                      className="pointer-events-none absolute left-0 top-0 h-1.5 w-1.5 border-l border-t transition-all duration-300 group-hover:h-2.5 group-hover:w-2.5"
+                      style={{ borderColor: T.text }}
+                    />
+                    <span
+                      className="pointer-events-none absolute bottom-0 right-0 h-1.5 w-1.5 border-b border-r transition-all duration-300 group-hover:h-2.5 group-hover:w-2.5"
+                      style={{ borderColor: T.text }}
+                    />
+                    Next
+                  </button>
                 </div>
               </div>
-            )}
+            </div>
           </article>
 
           {/* Sidebar */}
