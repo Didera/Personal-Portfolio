@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import { ScrollReveal } from "@/components/ui/ScrollReveal";
 import {
   experiences,
@@ -27,6 +28,11 @@ const COLOR = {
 
 export function ExperienceSection() {
   const [activePanel, setActivePanel] = useState<ExperiencePanelType>("technical");
+  const [activeMobilePanel, setActiveMobilePanel] = useState<ExperiencePanelType | null>("technical");
+
+  const toggleMobile = (panel: ExperiencePanelType) => {
+    setActiveMobilePanel(current => current === panel ? null : panel);
+  };
 
   const isTechActive = activePanel === "technical";
   const isVolActive  = activePanel === "volunteering";
@@ -205,31 +211,51 @@ export function ExperienceSection() {
       </div>
 
       {/* Mobile */}
-      <div className="space-y-10 lg:hidden">
-        <div>
-          <PanelHeading number="01" title="Technical" subtitle="Technical Experience" accent={COLOR.tech} />
-          <div>
+      <div className="space-y-2 lg:hidden">
+        <MobileAccordion
+          number="01"
+          title="Technical"
+          subtitle="Technical Experience"
+          accent={COLOR.tech}
+          isOpen={activeMobilePanel === "technical"}
+          onClick={() => toggleMobile("technical")}
+        >
+          <div className="pt-2 pb-6">
             {experiences.map((exp, i) => (
               <ExperienceItemRow key={`${exp.company}-${exp.role}`} exp={exp} i={i} color={COLOR.tech} />
             ))}
           </div>
-        </div>
-        <div>
-          <PanelHeading number="02" title="Volunteering" subtitle="Volunteering" accent={COLOR.vol} />
-          <div>
+        </MobileAccordion>
+
+        <MobileAccordion
+          number="02"
+          title="Volunteering"
+          subtitle="Volunteering"
+          accent={COLOR.vol}
+          isOpen={activeMobilePanel === "volunteering"}
+          onClick={() => toggleMobile("volunteering")}
+        >
+          <div className="pt-2 pb-6">
             {volunteeringExperiences.map((exp, i) => (
               <ExperienceItemRow key={`${exp.company}-${exp.role}`} exp={exp} i={i} color={COLOR.vol} />
             ))}
           </div>
-        </div>
-        <div>
-          <PanelHeading number="03" title="Competitions" subtitle="Competitions" accent={COLOR.comp} />
-          <div>
+        </MobileAccordion>
+
+        <MobileAccordion
+          number="03"
+          title="Competitions"
+          subtitle="Competitions"
+          accent={COLOR.comp}
+          isOpen={activeMobilePanel === "competitions"}
+          onClick={() => toggleMobile("competitions")}
+        >
+          <div className="pt-2 pb-6">
             {competitionExperiences.map((exp, i) => (
               <ExperienceItemRow key={`${exp.company}-${exp.role}`} exp={exp} i={i} color={COLOR.comp} />
             ))}
           </div>
-        </div>
+        </MobileAccordion>
       </div>
     </section>
   );
@@ -307,11 +333,31 @@ function CompressedPanel({ title, count, items, accent }: { title: string; count
   );
 }
 
-function PanelHeading({ number, title, subtitle, accent }: { number: string; title: string; subtitle: string; accent: string }) {
+function MobileAccordion({ number, title, subtitle, accent, isOpen, onClick, children }: { number: string; title: string; subtitle: string; accent: string; isOpen: boolean; onClick: () => void; children: React.ReactNode }) {
   return (
-    <div className="mb-8 border-b pb-5" style={{ borderColor: "var(--border)" }}>
-      <span className="font-mono" style={{ fontSize: "0.68rem", letterSpacing: "0.2em", textTransform: "uppercase", color: accent }}>{number} / {title}</span>
-      <h3 className="mt-3 font-serif leading-none" style={{ fontSize: "clamp(2rem, 8vw, 3rem)", color: "var(--text)", letterSpacing: "-0.035em" }}>{subtitle}</h3>
+    <div className="border-b" style={{ borderColor: "var(--border)" }}>
+      <button type="button" onClick={onClick} className="w-full text-left py-5 flex justify-between items-end group">
+        <div>
+          <span className="font-mono" style={{ fontSize: "0.68rem", letterSpacing: "0.2em", textTransform: "uppercase", color: accent }}>{number} / {title}</span>
+          <h3 className="mt-3 font-serif leading-none" style={{ fontSize: "clamp(2rem, 8vw, 3rem)", color: "var(--text)", letterSpacing: "-0.035em" }}>{subtitle}</h3>
+        </div>
+        <span className="font-mono text-xl mb-1" style={{ color: "var(--muted)", transition: "transform 0.3s ease", transform: isOpen ? "rotate(180deg)" : "rotate(0deg)" }}>
+          ↓
+        </span>
+      </button>
+      <AnimatePresence initial={false}>
+        {isOpen && (
+          <motion.div
+            initial={{ height: 0, opacity: 0 }}
+            animate={{ height: "auto", opacity: 1 }}
+            exit={{ height: 0, opacity: 0 }}
+            transition={{ duration: 0.3, ease: "easeInOut" }}
+            className="overflow-hidden"
+          >
+            {children}
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }

@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import { ScrollReveal } from "@/components/ui/ScrollReveal";
 import { ProjectCard } from "@/components/ui/ProjectCard";
 import { ArticleCard } from "@/components/ui/ArticleCard";
@@ -20,6 +21,11 @@ const COLOR = {
 
 export function ProjectsSection() {
   const [activePanel, setActivePanel] = useState<ActivePanel>("business-analysis");
+  const [activeMobilePanel, setActiveMobilePanel] = useState<ActivePanel | null>("business-analysis");
+
+  const toggleMobile = (panel: ActivePanel) => {
+    setActiveMobilePanel(current => current === panel ? null : panel);
+  };
 
   const isDSActive       = activePanel === "data-science";
   const isBAActive       = activePanel === "business-analysis";
@@ -194,19 +200,48 @@ export function ProjectsSection() {
       </div>
 
       {/* Mobile */}
-      <div className="space-y-10 lg:hidden">
-        <div>
-          <PanelHeading number="01" title="Data Science" subtitle="Data Science" accent={COLOR.ds} />
-          <div>{dsProjects.map((p, i) => <ProjectCard key={p.slug} project={p} index={i} accentColor={COLOR.ds} />)}<div style={{ height: "1px", background: "var(--border)" }} /></div>
-        </div>
-        <div>
-          <PanelHeading number="02" title="Business Analysis" subtitle="Business Analysis" accent={COLOR.ba} />
-          <div>{baProjects.map((p, i) => <ProjectCard key={p.slug} project={p} index={i} accentColor={COLOR.ba} />)}<div style={{ height: "1px", background: "var(--border)" }} /></div>
-        </div>
-        <div>
-          <PanelHeading number="03" title="Articles" subtitle="Written Notes" accent={COLOR.articles} />
-          <div>{articles.map((a, i) => <ArticleCard key={a.slug} article={a} index={i} accentColor={COLOR.articles} />)}<div style={{ height: "1px", background: "var(--border)" }} /></div>
-        </div>
+      <div className="space-y-2 lg:hidden">
+        <MobileAccordion
+          number="01"
+          title="Data Science"
+          subtitle="Data Science"
+          accent={COLOR.ds}
+          isOpen={activeMobilePanel === "data-science"}
+          onClick={() => toggleMobile("data-science")}
+        >
+          <div className="pt-2 pb-6">
+            {dsProjects.map((p, i) => <ProjectCard key={p.slug} project={p} index={i} accentColor={COLOR.ds} />)}
+            <div style={{ height: "1px", background: "var(--border)" }} />
+          </div>
+        </MobileAccordion>
+        
+        <MobileAccordion
+          number="02"
+          title="Business Analysis"
+          subtitle="Business Analysis"
+          accent={COLOR.ba}
+          isOpen={activeMobilePanel === "business-analysis"}
+          onClick={() => toggleMobile("business-analysis")}
+        >
+          <div className="pt-2 pb-6">
+            {baProjects.map((p, i) => <ProjectCard key={p.slug} project={p} index={i} accentColor={COLOR.ba} />)}
+            <div style={{ height: "1px", background: "var(--border)" }} />
+          </div>
+        </MobileAccordion>
+
+        <MobileAccordion
+          number="03"
+          title="Articles"
+          subtitle="Written Notes"
+          accent={COLOR.articles}
+          isOpen={activeMobilePanel === "articles"}
+          onClick={() => toggleMobile("articles")}
+        >
+          <div className="pt-2 pb-6">
+            {articles.map((a, i) => <ArticleCard key={a.slug} article={a} index={i} accentColor={COLOR.articles} />)}
+            <div style={{ height: "1px", background: "var(--border)" }} />
+          </div>
+        </MobileAccordion>
       </div>
     </section>
   );
@@ -231,11 +266,31 @@ function CompressedPanel({ title, count, items, accent }: { title: string; count
   );
 }
 
-function PanelHeading({ number, title, subtitle, accent }: { number: string; title: string; subtitle: string; accent: string }) {
+function MobileAccordion({ number, title, subtitle, accent, isOpen, onClick, children }: { number: string; title: string; subtitle: string; accent: string; isOpen: boolean; onClick: () => void; children: React.ReactNode }) {
   return (
-    <div className="mb-8 border-b pb-5" style={{ borderColor: "var(--border)" }}>
-      <span className="font-mono" style={{ fontSize: "0.68rem", letterSpacing: "0.2em", textTransform: "uppercase", color: accent }}>{number} / {title}</span>
-      <h3 className="mt-3 font-serif leading-none" style={{ fontSize: "clamp(2rem, 8vw, 3rem)", color: "var(--text)", letterSpacing: "-0.035em" }}>{subtitle}</h3>
+    <div className="border-b" style={{ borderColor: "var(--border)" }}>
+      <button type="button" onClick={onClick} className="w-full text-left py-5 flex justify-between items-end group">
+        <div>
+          <span className="font-mono" style={{ fontSize: "0.68rem", letterSpacing: "0.2em", textTransform: "uppercase", color: accent }}>{number} / {title}</span>
+          <h3 className="mt-3 font-serif leading-none" style={{ fontSize: "clamp(2rem, 8vw, 3rem)", color: "var(--text)", letterSpacing: "-0.035em" }}>{subtitle}</h3>
+        </div>
+        <span className="font-mono text-xl mb-1" style={{ color: "var(--muted)", transition: "transform 0.3s ease", transform: isOpen ? "rotate(180deg)" : "rotate(0deg)" }}>
+          ↓
+        </span>
+      </button>
+      <AnimatePresence initial={false}>
+        {isOpen && (
+          <motion.div
+            initial={{ height: 0, opacity: 0 }}
+            animate={{ height: "auto", opacity: 1 }}
+            exit={{ height: 0, opacity: 0 }}
+            transition={{ duration: 0.3, ease: "easeInOut" }}
+            className="overflow-hidden"
+          >
+            {children}
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }
