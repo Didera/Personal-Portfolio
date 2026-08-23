@@ -47,11 +47,7 @@ export const projects: Project[] = [
     demoUrl: "https://add-your-demo-link.com",
     year: "2026",
     role: "Data Analyst, Machine Learning Developer & Frontend Developer",
-    snapshots: [
-      "/snapshots/churn-dashboard-overview.png",
-      "/snapshots/churn-model-comparison.png",
-      "/snapshots/churn-eda-portal.png",
-    ],
+    snapshots: ["/snapshots/1.png", "/snapshots/2.png", "/snapshots/3.png"],
   },
 
   {
@@ -96,11 +92,7 @@ export const projects: Project[] = [
     demoUrl: "https://tracera.example.com",
     year: "2025",
     role: "Full-Stack Developer & Data Pipeline Architect",
-    snapshots: [
-      "/snapshots/tracera-dashboard.png",
-      "/snapshots/tracera-requirements.png",
-      "/snapshots/tracera-cicd-status.png",
-    ],
+    snapshots: ["/snapshots/7.png", "/snapshots/8.png", "/snapshots/9.png"],
   },
   {
     slug: "neurolabs",
@@ -136,11 +128,7 @@ export const projects: Project[] = [
     demoUrl: "https://neurolabs.example.com",
     year: "2024",
     role: "Group Project — Data Science & ML",
-    snapshots: [
-      "/snapshots/neurolabs-model-builder.png",
-      "/snapshots/neurolabs-visualizations.png",
-      "/snapshots/neurolabs-results.png",
-    ],
+    snapshots: ["/snapshots/4.png", "/snapshots/5.png", "/snapshots/6.png"],
   },
 
   {
