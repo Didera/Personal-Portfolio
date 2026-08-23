@@ -187,9 +187,9 @@ export const projects: Project[] = [
     year: "2025",
     role: "Business Analyst & Project Manager",
     snapshots: [
-      "/snapshots/medicare-bpmn-asis.png",
-      "/snapshots/medicare-wireframes.png",
-      "/snapshots/medicare-wbs.png",
+      "/snapshots/medicare-1.png",
+      "/snapshots/medicare-2.png",
+      "/snapshots/medicare-3.png",
     ],
   },
 ];
