@@ -51,12 +51,13 @@ function TypewriterBlock({ started }: { started: boolean }) {
     <div
       className="font-mono"
       style={{
-        fontSize: "clamp(0.75rem, 2.5vw, 0.9rem)",
-        maxWidth: "520px",
-        lineHeight: 1.85,
+        fontSize: "clamp(1rem, 2.2vw, 1.15rem)",
+        maxWidth: "580px",
+        lineHeight: 2,
         letterSpacing: "0.02em",
         wordBreak: "break-word",
         overflowWrap: "break-word",
+        textAlign: "center",
       }}
     >
       {LINES.map((line, i) => {
@@ -105,7 +106,7 @@ export function HeroSection() {
           appears centred when the page first loads.
       ───────────────────────────────────────── */}
       <div
-        className="relative z-10 flex flex-col justify-center px-6 sm:px-10 lg:px-16"
+        className="relative z-10 flex flex-col items-center justify-center px-6 sm:px-10 lg:px-16 text-center"
         style={{ minHeight: "100vh" }}
       >
         {/* Editorial marginalia — top right */}
@@ -113,7 +114,7 @@ export function HeroSection() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 1, delay: 1 }}
-          className="absolute top-8 right-10 lg:right-16 font-mono text-right"
+          className="absolute top-8 right-10 lg:right-16 font-mono text-right z-10"
           style={{
             fontSize: "0.7rem",
             letterSpacing: "0.18em",
@@ -131,13 +132,13 @@ export function HeroSection() {
         <motion.div
           initial={{ scaleX: 0, opacity: 0 }}
           animate={{ scaleX: 1, opacity: 1 }}
-          transition={{ duration: 0.8, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
+          transition={{ duration: 1, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
           style={{
             width: "60px",
             height: "1px",
             background: "var(--accent)",
             marginBottom: "2rem",
-            transformOrigin: "left",
+            transformOrigin: "center",
           }}
         />
 
@@ -148,6 +149,7 @@ export function HeroSection() {
             fontSize: "clamp(3.5rem, 10vw, 9rem)",
             letterSpacing: "-0.03em",
             color: "var(--text)",
+            textAlign: "center",
           }}
         >
           <span style={{ display: "block", overflow: "hidden" }}>
@@ -201,7 +203,7 @@ export function HeroSection() {
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ duration: 0.9, delay: 1.2 }}
+          transition={{ duration: 1.2, delay: 1.3 }}
           className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-3"
         >
           <div className="w-px h-12 animate-scroll-pulse" style={{ background: "var(--border)" }} />
@@ -221,32 +223,32 @@ export function HeroSection() {
       ───────────────────────────────────────── */}
       <div
         ref={bioRef}
-        className="relative z-10 flex flex-col justify-center px-6 sm:px-10 lg:px-16"
+        className="relative z-10 flex flex-col items-center justify-center px-6 sm:px-10 lg:px-16 text-center"
         style={{ minHeight: "100vh" }}
       >
         {/* Divider */}
         <motion.div
           initial={{ scaleX: 0, opacity: 0 }}
           animate={bioInView ? { scaleX: 1, opacity: 1 } : {}}
-          transition={{ duration: 0.7, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
+          transition={{ duration: 1, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
           style={{
             width: "60px",
             height: "1px",
             background: "var(--border)",
             marginBottom: "2.5rem",
-            transformOrigin: "left",
+            transformOrigin: "center",
           }}
         />
 
         <motion.div
-          initial={{ opacity: 0, y: 32 }}
-          animate={bioInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.9, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
-          className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-10"
+          initial={{ opacity: 0, y: 18, filter: "blur(6px)" }}
+          animate={bioInView ? { opacity: 1, y: 0, filter: "blur(0px)" } : {}}
+          transition={{ duration: 1.2, delay: 0.25, ease: [0.16, 1, 0.3, 1] }}
+          className="flex flex-col items-center gap-10 w-full"
         >
           <TypewriterBlock started={bioInView} />
 
-          <div className="flex gap-8 items-center shrink-0">
+          <div className="flex gap-8 items-center justify-center">
             <Link
               href="#projects"
               className="font-mono no-underline transition-colors duration-300"
