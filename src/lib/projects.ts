@@ -44,91 +44,10 @@ export const projects: Project[] = [
     ],
     githubUrl:
       "https://github.com/Didera/Demo---Customer-Retention-Analysis-Project",
-    demoUrl: "https://add-your-demo-link.com",
+    demoUrl: "",
     year: "2026",
     role: "Data Analyst, Machine Learning Developer & Frontend Developer",
     snapshots: ["/snapshots/1.png", "/snapshots/2.png", "/snapshots/3.png"],
-  },
-
-  {
-    slug: "tracera",
-    name: "TraceRa",
-    emoji: "",
-    bgGradient: "linear-gradient(135deg, #0d0f1a, #111a2e)",
-    tags: ["Next.js", "NestJS", "PostgreSQL", "Socket.IO"],
-    category: "business-analysis",
-    shortDesc:
-      "A full-stack traceability platform connecting Business Analysis, Project Management, development progress, and CI/CD visibility into one workflow.",
-    longDesc:
-      "TraceRa bridges the gap between business requirements and delivery — making every requirement traceable from business need to deployment.",
-    overview:
-      "What happens after a Business Analyst writes a requirement? That question became the starting point for TraceRa.\n\nIn most software teams, requirements live in one tool, tasks in another, pull requests in GitHub, and deployment status somewhere else entirely. Nobody has a single view that answers: is this business requirement actually done? This fragmentation is not just an inconvenience — it is a root cause of scope creep, missed acceptance criteria, and failed releases.\n\nThe core logical insight behind TraceRa is simple: traceability is not a reporting feature, it is a workflow constraint. Every development task should be traceable back to a business requirement. Every requirement should have defined acceptance criteria before a task is created. Every pull request should be linked to a task. And release readiness should be computed automatically from those links — not from manual status updates.\n\nThis reasoning led to a deliberate design decision: TraceRa enforces the Golden Workflow as a structural constraint, not a suggestion. A task cannot be created without a linked, approved requirement. A PR cannot be marked complete without CI/CD results. This forces the team to think about business intent before writing a single line of code.\n\nTraceRa connects Business Analysis, Project Management, development progress, and CI/CD visibility into one traceable workflow. The main objective is to demonstrate how the Golden Workflow works in a real software delivery process: from creating a business requirement, approving it, converting it into development tasks, linking it with GitHub pull requests and CI/CD pipeline results, and finally tracking release readiness through a live dashboard.\n\nWhen requirements, acceptance criteria, approvals, and linked tasks are all visible in one place, team members can understand what needs to be built, why it matters, and what is considered complete — reducing confusion and keeping scope creep under control.",
-    features: [
-      "Requirement management with approval workflows and acceptance criteria",
-      "Project and sprint tracking linked directly to requirements",
-      "GitHub repository linking with pull request tracking",
-      "CI/CD pipeline status updates via GitHub Webhooks and Actions",
-      "Live dashboard and activity updates powered by Socket.IO",
-      "Role-based access control (BA, PM, Developer, Stakeholder)",
-      "Activity logs for full audit trail across the delivery lifecycle",
-      "Release readiness tracking across all linked requirements and tasks",
-    ],
-    tech: [
-      "Next.js",
-      "React",
-      "TypeScript",
-      "Tailwind CSS",
-      "NestJS",
-      "PostgreSQL",
-      "Prisma",
-      "Docker",
-      "Socket.IO",
-      "JWT Auth",
-      "GitHub Webhooks",
-      "GitHub Actions",
-    ],
-    githubUrl:
-      "https://github.com/Didera/Tracera---Project-Management-Platform",
-    demoUrl: "https://tracera.example.com",
-    year: "2025",
-    role: "Full-Stack Developer & Data Pipeline Architect",
-    snapshots: ["/snapshots/7.png", "/snapshots/8.png", "/snapshots/9.png"],
-  },
-  {
-    slug: "neurolabs",
-    name: "Neurolabs",
-    emoji: "",
-    bgGradient: "linear-gradient(135deg, #0a0f1a, #0f1a2e)",
-    tags: ["Electron.js", "Python", "FastAPI", "Plotly"],
-    category: "data-science",
-    shortDesc:
-      "An interactive desktop GUI for creating and training Machine Learning models without writing code — built for students and beginners.",
-    longDesc:
-      "Neurolabs makes experimenting with ML models accessible to beginners by removing the boilerplate, so users can focus on learning core concepts.",
-    overview:
-      "Neurolabs is an interactive GUI desktop application that lets users create, train, and evaluate Machine Learning models without writing code line by line.\n\nBuilt as a 2nd year group project, the application bridges a gap for students and beginners who want to experiment with ML workflows without getting blocked by implementation complexity. Users can upload datasets, configure models through an intuitive interface, and instantly visualize results — all without touching a single line of ML code.\n\nThe architecture splits cleanly into a desktop frontend built with Electron.js and a Python-powered ML engine exposed through a FastAPI middleware layer, allowing the two to communicate seamlessly.",
-    features: [
-      "Dataset upload and preview with feature selection",
-      "Target variable configuration through a guided UI",
-      "Support for multiple ML algorithms (classification, regression)",
-      "One-click model training and evaluation",
-      "Interactive visualizations — accuracy curves, confusion matrices, and more via Plotly",
-      "Beginner-friendly interface designed to teach ML concepts through doing",
-    ],
-    tech: [
-      "Electron.js",
-      "Python",
-      "FastAPI",
-      "Plotly",
-      "scikit-learn",
-      "pandas",
-      "NumPy",
-    ],
-    githubUrl: "https://github.com/Team-Voxel/neurolabs",
-    demoUrl: "https://neurolabs.example.com",
-    year: "2024",
-    role: "Group Project — Data Science & ML",
-    snapshots: ["/snapshots/4.png", "/snapshots/5.png", "/snapshots/6.png"],
   },
 
   {
@@ -183,7 +102,7 @@ export const projects: Project[] = [
     ],
     githubUrl:
       "https://drive.google.com/drive/folders/1hTlSlaKw-RIwULhXIuoV5aJIm1Zhf4aU?usp=sharing",
-    demoUrl: "https://add-your-demo-link.com",
+    demoUrl: "",
     year: "2025",
     role: "Business Analyst & Project Manager",
     snapshots: [
@@ -191,6 +110,87 @@ export const projects: Project[] = [
       "/snapshots/medicare-2.png",
       "/snapshots/medicare-3.png",
     ],
+  },
+
+  {
+    slug: "tracera",
+    name: "TraceRa",
+    emoji: "",
+    bgGradient: "linear-gradient(135deg, #0d0f1a, #111a2e)",
+    tags: ["Next.js", "NestJS", "PostgreSQL", "Socket.IO"],
+    category: "business-analysis",
+    shortDesc:
+      "A full-stack traceability platform connecting Business Analysis, Project Management, development progress, and CI/CD visibility into one workflow.",
+    longDesc:
+      "TraceRa bridges the gap between business requirements and delivery — making every requirement traceable from business need to deployment.",
+    overview:
+      "What happens after a Business Analyst writes a requirement? That question became the starting point for TraceRa.\n\nIn most software teams, requirements live in one tool, tasks in another, pull requests in GitHub, and deployment status somewhere else entirely. Nobody has a single view that answers: is this business requirement actually done? This fragmentation is not just an inconvenience — it is a root cause of scope creep, missed acceptance criteria, and failed releases.\n\nThe core logical insight behind TraceRa is simple: traceability is not a reporting feature, it is a workflow constraint. Every development task should be traceable back to a business requirement. Every requirement should have defined acceptance criteria before a task is created. Every pull request should be linked to a task. And release readiness should be computed automatically from those links — not from manual status updates.\n\nThis reasoning led to a deliberate design decision: TraceRa enforces the Golden Workflow as a structural constraint, not a suggestion. A task cannot be created without a linked, approved requirement. A PR cannot be marked complete without CI/CD results. This forces the team to think about business intent before writing a single line of code.\n\nTraceRa connects Business Analysis, Project Management, development progress, and CI/CD visibility into one traceable workflow. The main objective is to demonstrate how the Golden Workflow works in a real software delivery process: from creating a business requirement, approving it, converting it into development tasks, linking it with GitHub pull requests and CI/CD pipeline results, and finally tracking release readiness through a live dashboard.\n\nWhen requirements, acceptance criteria, approvals, and linked tasks are all visible in one place, team members can understand what needs to be built, why it matters, and what is considered complete — reducing confusion and keeping scope creep under control.",
+    features: [
+      "Requirement management with approval workflows and acceptance criteria",
+      "Project and sprint tracking linked directly to requirements",
+      "GitHub repository linking with pull request tracking",
+      "CI/CD pipeline status updates via GitHub Webhooks and Actions",
+      "Live dashboard and activity updates powered by Socket.IO",
+      "Role-based access control (BA, PM, Developer, Stakeholder)",
+      "Activity logs for full audit trail across the delivery lifecycle",
+      "Release readiness tracking across all linked requirements and tasks",
+    ],
+    tech: [
+      "Next.js",
+      "React",
+      "TypeScript",
+      "Tailwind CSS",
+      "NestJS",
+      "PostgreSQL",
+      "Prisma",
+      "Docker",
+      "Socket.IO",
+      "JWT Auth",
+      "GitHub Webhooks",
+      "GitHub Actions",
+    ],
+    githubUrl:
+      "https://github.com/Didera/Tracera---Project-Management-Platform",
+    demoUrl: "",
+    year: "2025",
+    role: "Full-Stack Developer & Data Pipeline Architect",
+    snapshots: ["/snapshots/7.png", "/snapshots/8.png", "/snapshots/9.png"],
+  },
+  {
+    slug: "neurolabs",
+    name: "Neurolabs",
+    emoji: "",
+    bgGradient: "linear-gradient(135deg, #0a0f1a, #0f1a2e)",
+    tags: ["Electron.js", "Python", "FastAPI", "Plotly"],
+    category: "data-science",
+    shortDesc:
+      "An interactive desktop GUI for creating and training Machine Learning models without writing code — built for students and beginners.",
+    longDesc:
+      "Neurolabs makes experimenting with ML models accessible to beginners by removing the boilerplate, so users can focus on learning core concepts.",
+    overview:
+      "Neurolabs is an interactive GUI desktop application that lets users create, train, and evaluate Machine Learning models without writing code line by line.\n\nBuilt as a 2nd year group project, the application bridges a gap for students and beginners who want to experiment with ML workflows without getting blocked by implementation complexity. Users can upload datasets, configure models through an intuitive interface, and instantly visualize results — all without touching a single line of ML code.\n\nThe architecture splits cleanly into a desktop frontend built with Electron.js and a Python-powered ML engine exposed through a FastAPI middleware layer, allowing the two to communicate seamlessly.",
+    features: [
+      "Dataset upload and preview with feature selection",
+      "Target variable configuration through a guided UI",
+      "Support for multiple ML algorithms (classification, regression)",
+      "One-click model training and evaluation",
+      "Interactive visualizations — accuracy curves, confusion matrices, and more via Plotly",
+      "Beginner-friendly interface designed to teach ML concepts through doing",
+    ],
+    tech: [
+      "Electron.js",
+      "Python",
+      "FastAPI",
+      "Plotly",
+      "scikit-learn",
+      "pandas",
+      "NumPy",
+    ],
+    githubUrl: "https://github.com/Team-Voxel/neurolabs",
+    demoUrl: "",
+    year: "2024",
+    role: "Group Project — Data Science & ML",
+    snapshots: ["/snapshots/4.png", "/snapshots/5.png", "/snapshots/6.png"],
   },
 ];
 export function getProjectBySlug(slug: string): Project | undefined {

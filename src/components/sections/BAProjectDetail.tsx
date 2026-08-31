@@ -376,7 +376,7 @@ export function BAProjectDetail({ project }: Props) {
               className="border p-6 space-y-4"
               style={{ borderColor: T.borderMid, background: T.surface }}
             >
-              <Label>Documentation</Label>
+              <Label>GitHub</Label>
               <div className="mt-3">
                 <a
                   href={project.githubUrl}
@@ -410,7 +410,7 @@ export function BAProjectDetail({ project }: Props) {
                     className="pointer-events-none absolute bottom-0 right-0 h-1.5 w-1.5 border-b border-r transition-all duration-300 group-hover:h-3 group-hover:w-3"
                     style={{ borderColor: T.accent }}
                   />
-                  View Full Documentation →
+                  View on GitHub →
                 </a>
               </div>
             </div>

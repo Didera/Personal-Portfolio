@@ -357,7 +357,7 @@ export function ProjectDetail({ project }: Props) {
 
           <div className="flex gap-4">
             <a
-              href={project.demoUrl}
+              href={project.githubUrl}
               target="_blank"
               rel="noopener noreferrer"
               className="group relative overflow-hidden border font-mono transition-all duration-500"
@@ -387,45 +387,6 @@ export function ProjectDetail({ project }: Props) {
               <span
                 className="pointer-events-none absolute bottom-0 right-0 h-1.5 w-1.5 border-b border-r transition-all duration-300 group-hover:h-3 group-hover:w-3"
                 style={{ borderColor: "#4F8EF7" }}
-              />
-              View Work ↗
-            </a>
-
-            <a
-              href={project.githubUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="group relative overflow-hidden border font-mono transition-all duration-500"
-              style={{
-                borderColor: "rgba(238, 232, 220, 0.2)",
-                color: "#8e8981",
-                background: "transparent",
-                padding: "0.6rem 1.4rem",
-                fontSize: "0.7rem",
-                letterSpacing: "0.15em",
-                textTransform: "uppercase",
-                textDecoration: "none",
-                cursor: "pointer",
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.background = "rgba(255, 255, 255, 0.05)";
-                e.currentTarget.style.color = "#eee8dc";
-                e.currentTarget.style.borderColor = "rgba(238, 232, 220, 0.6)";
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.background = "transparent";
-                e.currentTarget.style.color = "#8e8981";
-                e.currentTarget.style.borderColor = "rgba(238, 232, 220, 0.2)";
-              }}
-            >
-              {/* Animated corner accent */}
-              <span
-                className="pointer-events-none absolute left-0 top-0 h-1.5 w-1.5 border-l border-t transition-all duration-300 group-hover:h-3 group-hover:w-3"
-                style={{ borderColor: "#eee8dc" }}
-              />
-              <span
-                className="pointer-events-none absolute bottom-0 right-0 h-1.5 w-1.5 border-b border-r transition-all duration-300 group-hover:h-3 group-hover:w-3"
-                style={{ borderColor: "#eee8dc" }}
               />
               GitHub
             </a>

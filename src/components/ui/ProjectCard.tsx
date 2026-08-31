@@ -119,7 +119,7 @@ export function ProjectCard({ project, index, accentColor = "var(--accent)" }: P
             onMouseEnter={(e) => ((e.currentTarget as HTMLElement).style.color = accentColor)}
             onMouseLeave={(e) => ((e.currentTarget as HTMLElement).style.color = "var(--muted)")}
           >
-            {project.category === "business-analysis" ? "Documentation ↗" : "GitHub ↗"}
+            {project.category === "business-analysis" ? "GitHub ↗" : "GitHub ↗"}
           </a>
           <span
             className="font-mono ml-auto transition-colors duration-300"

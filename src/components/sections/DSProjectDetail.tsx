@@ -224,8 +224,7 @@ export function DSProjectDetail({ project }: Props) {
               <Label>Links</Label>
               <div className="mt-3 flex flex-col gap-3">
                 {[
-                  { label: "GitHub →", href: project.githubUrl, isPrimary: false },
-                  { label: "Live Demo →", href: project.demoUrl, isPrimary: true },
+                  { label: "GitHub →", href: project.githubUrl, isPrimary: true },
                 ].map(({ label, href, isPrimary }) => (
                   <a key={label} href={href} target="_blank" rel="noopener noreferrer"
                     className="group relative overflow-hidden border font-mono transition-all duration-500 block text-center"
